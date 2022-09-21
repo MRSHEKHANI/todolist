@@ -3,9 +3,9 @@
 /**
  * Init contructor for application
  * @constructor
- * @param {number} id - id for Todo
- * @param {string} content - content for Todo 
- * @param {boolean} isDone - status for Todo
+ * @param {number} id -
+ * @param {string} content 
+ * @param {boolean} isDone 
  */
 function Todo(id, content, isDone) {
   this.id = id;
@@ -13,13 +13,11 @@ function Todo(id, content, isDone) {
   this.isDone = isDone;
 };
 
-/**
- * Declare a controller
- */
+
 function TodoController() {
   this.todoList = [];
   this.id = 1;
-  this.ENTER_KEY = 13;
+ 
   this.todoInput = document.getElementById('newTodo');
   this.todoListView = document.getElementById('todoListView');
   this.todoaddbtn = document.querySelector('.add-btn');
@@ -28,7 +26,7 @@ function TodoController() {
 
 TodoController.prototype = {
   /**
-   * @param {argument} key - get to localstorage
+   * @param {argument} key 
    */
   getTodoFromLocalstorage: function (key) {
     var todoList = JSON.parse(localStorage.getItem(key)) || [];
@@ -36,14 +34,14 @@ TodoController.prototype = {
   },
 
   /**
-   * @param {argument} key - set into localstorage
+   * @param {argument} key 
    */
   setTodoLocalstorage: function (key) {
     localStorage.setItem('todoList', JSON.stringify(key));
   },
 
   /**
-   * @param {sting} value - content todo
+   * @param {sting} value 
    */
   handleTodoItem: function (value) {
     this.isDone = false;
@@ -54,7 +52,7 @@ TodoController.prototype = {
   },
 
   /**
-   * @param {array} mainArray - find id last in array at localstorage
+   * @param {array} mainArray -
    */
   idLargestOfLocal: function (mainArray) {
     var lengthArr = mainArray.length;
@@ -69,9 +67,9 @@ TodoController.prototype = {
   },
 
   /**
-   * Presentation create new a todo item
-   * @param {array} list - id for todo
-   * @return {object} todo - return todo object
+  
+    @param {array} list - 
+    @return {object} 
   */
   addNewTodo: function (todo, list) {
     list.push(todo);
@@ -80,9 +78,9 @@ TodoController.prototype = {
   },
 
   /**
-   * Presentation create new a todo item
-   * @param {value attribute} attrs - value attribute for element html 
-   * @return {attribute} element - attribute for element html
+  
+   * @param {value attribute} attrs  
+   * @return {attribute}
   */
   setAttributes: function (element, attrs) {
     for (var key in attrs) {
@@ -91,16 +89,16 @@ TodoController.prototype = {
   },
 
   /**
-   * Create new checkbox input element
-   * @param {number} todoId - id checkbox
+  
+   * @param {number} todoId 
    */
   checkboxView: function (todoId) {
     var inpCheckbox = document.createElement('input');
     this.setAttributes(inpCheckbox, { type: 'checkbox', class: 'itemList', id: todoId });
 
-    //event check for input checkbox
+   
     inpCheckbox.addEventListener('click', function (e) {
-      //get list array from localStorage
+     
       var list = todoController.getTodoFromLocalstorage('todoList');
       var id = e.target.getAttribute('id');
       for (var i = 0; i < list.length; i++) {
@@ -109,7 +107,7 @@ TodoController.prototype = {
         }
       }
 
-      //save list todo to localStorage
+    
       todoController.setTodoLocalstorage(list);
       todoController.countItem();
     });
@@ -118,8 +116,8 @@ TodoController.prototype = {
   },
 
   /**
-   * Create new lable element
-   * @param {object} todo - item todo from addNewTodo 
+  
+   * @param {object} todo -
    */
   createLableView: function (todo) {
     var lbContent = document.createElement('label');
@@ -131,29 +129,29 @@ TodoController.prototype = {
   },
 
   /**
-   * Create new li element
-   * @param {object} todo - item todo from addNewTodo 
+  
+   * @param {object} todo -
    */
   initTodoITem: function (todo) {
     var item = document.createElement('li');
     item.setAttribute('class', 'todoItem');
-    // this.setAttributes(item, { , class: 'todoItem ' });
+  
 
-    //event event double click in node li
+   
     item.addEventListener('dblclick', function (e){
       item.classList.add('editing');
     });
 
-    //return node li
+   
     return item;
   },
 
   /**
-   * Create new input edit element
-   * @param {object} todo - item todo from addNewTodo 
+  
+   * @param {object} todo  
    */
   editInputView: function (todo) {
-    //get array from localStorage
+    
     var list = todoController.getTodoFromLocalstorage('todoList');
     var inputEdit = document.createElement('input');
     this.setAttributes(inputEdit, {
@@ -164,19 +162,19 @@ TodoController.prototype = {
     });
     inputEdit.focus();
 
-    //event onblur get value edit and delete class editing when click outside this input
+   
     inputEdit.onblur = function (e) {
       todoController.handleTodoUpdate(e);
     };
 
-    //event onkeyup get value edit form inputEdit
-    inputEdit.onkeypress = function (e) {
+   
+    inputEdit.onclick = function (e) {
       if (event.which == todoController.addbtn || event.keyCode == todoController.addbtn) {
         todoController.handleTodoUpdate(e);
       }
     };
 
-    //return node input for edit todo
+    
     return inputEdit;
   },
 
@@ -193,9 +191,9 @@ TodoController.prototype = {
   },
 
   /**
-   * Presentation update todo edit
-   * @param {object} todo - get item todo from event get value edit
-   * @param {array} list - array in localStorage
+  
+   * @param {object} todo 
+   * @param {array} list - 
    */
   updateTodoEdit: function (todo, list) {
     for (var i = 0; i < list.length; i++) {
@@ -206,19 +204,19 @@ TodoController.prototype = {
       }
     }
 
-    //return new object have edit
+    
     return todo;
   },
 
   /**
-   * Presentation create new button remove item todo
-   * @param {object} todo - get item todo from event get value edit
+  
+   * @param {object} todo -
    */
   removeButtonView: function (todo) {
     var btnRemove = document.createElement('button');
     this.setAttributes(btnRemove, { class: 'remove', id: todo.id });
 
-    //event click mouse into btnRemove a item todo
+    
     btnRemove.addEventListener('click', function (e) {
       var id = e.target.getAttribute('id');
       todoController.removeTodo(id);
@@ -226,38 +224,38 @@ TodoController.prototype = {
       todoController.countItem();
     });
 
-    //return node button
+    
     return btnRemove;
   },
 
   /**
-   * Presentation create new a todo item
-   * @param {object} todo - object render to view 
+   
+   * @param {object} todo 
   */
   todoView: function (todo) {
-    var item = this.initTodoITem(todo);//create node li
-    var inpCheckbox = this.checkboxView(todo.id),//create node input checkbox
-      lbContent = this.createLableView(todo),//create node lable
-      inputEdit = this.editInputView(todo),//create node input edit
-      btnRemove = this.removeButtonView(todo);//create node button remove item todo
+    var item = this.initTodoITem(todo);
+    var inpCheckbox = this.checkboxView(todo.id),
+      lbContent = this.createLableView(todo),
+      inputEdit = this.editInputView(todo),
+      btnRemove = this.removeButtonView(todo);
 
-    //item append each element
+    
     item.appendChild(inpCheckbox);
     item.appendChild(lbContent);
     item.appendChild(inputEdit);
     item.appendChild(btnRemove);
 
-    //ul append each item
+    
     document.querySelector('#todoListView').appendChild(item);
 
-    //return node li contain inpCheckbox, lbContent, inputEdit, btnRemove
+   
     return item;
   },
 
   /**
-   * Presentation remove a item todo
-   * @param {number} id - id button remove item todo
-   * @param {array} list - list array get from localStorage
+  
+   * @param {number} id - 
+   * @param {array} list - 
    */
   removeTodo: function (id, list) {
     list = todoController.getTodoFromLocalstorage('todoList');
@@ -268,14 +266,14 @@ TodoController.prototype = {
       }
     }
 
-    //set value after remove item to localStorage
+   
     todoController.setTodoLocalstorage(list);
   },
 
   /**
-   * Presentation remove a item todo
-   * @param {index} index - index in array object 
-   * @param {array} list - list array get from localStorage
+ 
+   * @param {index} index -
+   * @param {array} list - 
    */
   countItem: function (index, list) {
     list = todoController.getTodoFromLocalstorage('todoList');
@@ -286,36 +284,33 @@ TodoController.prototype = {
       }
     }
 
-    // return index display to UI;
     document.getElementById('todoCount').innerHTML = index;
   },
 
-  /**
-   * Presentation the events for todo
-   */
+  
   events: function () {
-    // Event add todo
+    
     todoController.todoaddbtn.onclick = function (event) {
       if (event.which == todoController.add || event.keyCode == todoController.add) {
-        //get from localStorage
+        
         var todoList = todoController.getTodoFromLocalstorage('todoList');
 
-        //attach value for todo
+        
         var todoItem = todoController.handleTodoItem(todoController.todoInput.value);
 
-        //add new a Todo
+        
         var todo = todoController.addNewTodo(todoItem, todoList);
 
-        //Execute display to UI
+       
         todoController.todoView(todo);
 
-        //clear input
+      
         todoController.todoInput.value = '';
         todoController.countItem();
       }
     };
 
-    //event check all checkbox in list item
+  
     var list = document.getElementsByClassName('itemList');
     var checkAll = document.getElementById('toggleInputAll');
     checkAll.addEventListener('change', function (e) {
@@ -329,7 +324,7 @@ TodoController.prototype = {
       todoController.countItem();
     });
 
-    //Show all items
+    
     var listWork = document.getElementsByClassName('todoItem');
     var showAllItem = document.getElementById('allWorks');
     showAllItem.addEventListener('click', function () {
@@ -338,7 +333,6 @@ TodoController.prototype = {
       }
     });
 
-    // Filter todo list with actived items
     var activeItem = document.getElementsByClassName('todoItem');
     var todoActive = document.getElementById('activedItems');
     todoActive.addEventListener('click', function () {
@@ -351,7 +345,7 @@ TodoController.prototype = {
       }
     });
 
-    //Filter completed todo list
+   
     var completeItem = document.getElementsByClassName('todoItem');
     var todoCompleted = document.getElementById('completedTodos');
     todoCompleted.addEventListener('click', function () {
@@ -364,10 +358,10 @@ TodoController.prototype = {
       }
     });
 
-    // Added event clear completed items for button
+   
     var clearButton = document.getElementById('btnClear');
     clearButton.addEventListener('click', function () {
-      //get from localStorage
+     
       var list = todoController.getTodoFromLocalstorage('todoList');
       todoController.clearCompleted(list);
       todoController.setTodoLocalstorage(list);
@@ -376,8 +370,8 @@ TodoController.prototype = {
   },
 
   /**
-   * Presentation clear all item todo have isDone
-   * @param {array} list - get from localstorage
+  
+   * @param {array} list -
    */
   clearCompleted: function (list) {
     while (list.find(({ isDone }) => isDone)) {
@@ -386,9 +380,9 @@ TodoController.prototype = {
   },
 
   /**
-   * Presentation set status isDone into localstorage
-   * @param {boolean} check - isDone from event checkall 
-   * @param {array} todoList - list array get from localStorage
+  
+   * @param {boolean} check 
+   * @param {array} todoList -
    */
   checkAllTodo: function (check, todoList) {
     todoList = todoController.getTodoFromLocalstorage('todoList');
@@ -399,11 +393,11 @@ TodoController.prototype = {
   },
 
   /**
-   * Presentation set status isDone into localstorage
-   * @param {array} list - list array get from localStorage
+   
+   * @param {array} list -
    */
   renderTodo: function () {
-    //get from localStorage
+   
     var list = todoController.getTodoFromLocalstorage('todoList');
     todoController.removeElement();
     for (var i = 0; i < list.length; i++) {
@@ -423,29 +417,27 @@ TodoController.prototype = {
   },
 };
 
-//change class selected
+
 function changeClass(elem) {
   var a = document.getElementsByTagName('a');
   for (var i = 0; i < a.length; i++) {
     a[i].classList.remove('selected');
   };
 
-  //add class selected for element user click
+ 
   elem.classList.add('selected');
 };
 
-//todoController handle all action add, delete, edit, events
 var todoController = new TodoController();
 
-//todo create new object todo
+
 var todo = new Todo();
 
 
-//performing the events
 todoController.events();
 
-// //performing render todo display to UI
+
 todoController.renderTodo();
 
-//performing count all item active
+
 todoController.countItem();
