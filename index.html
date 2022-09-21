@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>todolist</title>
+</head>
+
+<body>
+    <section class="todoapp">
+        <div class="container">
+            <header class="header">
+                <h1>To Do List</h1>
+                <div class="center">
+                    <input id="newTodo" class="new-todo" placeholder="Add a task"><button type="submit" onclick="add"
+                    id="add-btn" class="add-btn">Add</button>
+                </div>
+            </header>
+            <section id="main">
+                <input id="toggleInputAll" class="toggle-all" type="checkbox" hidden>
+                <!-- <label for="toggle-all">Mark all as complete</label> -->
+                <ul id="todoListView" class="todo-list"></ul>
+            </section>
+        </div>
+        <footer class="footer">
+            <!-- <span class="todo-count"><strong id="todoCount">0</strong> item left</span> -->
+            <ul class="filters">
+                <li>
+                    <a class="selected" id="allWorks" onclick="changeClass(this)" href="#/">All</a>
+                </li>
+                <li>
+                    <a href="#completed" id="completedTodos" onclick="changeClass(this)">Completed</a>
+                </li>
+                <li>
+                    <a href="#active" id="activedItems" onclick="changeClass(this)">Active</a>
+                </li>
+
+            </ul>
+            <!-- <button class="clear-completed" id="btnClear">Clear completed</button> -->
+        </footer>
+    </section>
+
+
+    <script src="./new.js"></script>
+</body>
+
+</html>
